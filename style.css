@@ -1,4 +1,11 @@
-
+*{
+    height: auto
+}
+body{
+    background-image: linear-gradient(45deg, #D92365, #BF2696, #4843D9, #F2AA52, #F25749); 
+    
+    background-attachment: fixed;
+}
 td{
     border: 2px solid #333;
     height: 100px;
@@ -42,7 +49,7 @@ table tr td:last-child {
     display: none;
     width: 200px;
     top:120px;
-    background-color: orange;
+    background-color: #F25749;
     position: absolute;
     left: 50%;
     margin-left: -100px;
