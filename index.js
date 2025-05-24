@@ -55,7 +55,7 @@ function checkWin(board, player) {
 function gameOver(vencedor) {
     for (let index of jogadas[vencedor.index]) {
         document.getElementById(index).style.backgroundColor =
-            vencedor.player == humano ? "blue" : "red";
+            vencedor.player == humano ? "green" : "red";
     }
     for (var i = 0; i < cells.length; i++) {
         cells[i].removeEventListener('click', turnClick, false);
@@ -72,14 +72,37 @@ function emptySquares() {
     return quadro.filter(s => typeof s == 'number');
 }
 //Melhor jogada
+let dificuldade = "medio"; // valor inicial
+
+document.getElementById("dificuldade").addEventListener("change", function (e) {
+    dificuldade = e.target.value;
+});
 function bestSpot() {
-    return minimax(quadro, maquina).index;
+    const vazios = emptySquares();
+
+    if (dificuldade === "facil") {
+        // aleatório
+        const rand = Math.floor(Math.random() * vazios.length);
+        return vazios[rand];
+    } else if (dificuldade === "medio") {
+        // 50% chance de erro ou jogada perfeita
+        const chance = Math.random();
+        if (chance < 0.5) {
+            const rand = Math.floor(Math.random() * vazios.length);
+            return vazios[rand];
+        } else {
+            return minimax(quadro, maquina).index;
+        }
+    } else {
+        // difícil (perfeito)
+        return minimax(quadro, maquina).index;
+    }
 }
 //Checa se empatou
 function checkTie() {
     if (emptySquares().length == 0) {
         for (var i = 0; i < cells.length; i++) {
-            cells[i].style.backgroundColor = "yellow";
+            cells[i].style.backgroundColor = "#ff3b00";
             cells[i].removeEventListener('click', turnClick, false);
         }
         declareWinner("Empate!")
